@@ -15,3 +15,9 @@ UE_LOG(LogTemp, Warning, TEXT("Hello"));
 	UE_LOG(LogTemp, Warning, TEXT("%s"), *myString);
 to get the name of the current instance
 	UE_LOG(LogTemp, Warning, TEXT("Name of instance:  %s"), *GetName());
+
+	#DeltaTime: Time between frames, times between Frames 
+	when game lags , DeltaTime becomes high 
+	void Tick(float DeltaTime){
+		Move(1.f * DeltaTime); // will move one cm in every Frame
+	}
