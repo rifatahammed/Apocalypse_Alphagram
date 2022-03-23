@@ -2,8 +2,6 @@ Done
 3rd Folder --> 14
 
 
-https://github.com/DruidMech/UE4-CPP-Shooter-Series/tree/master/Source/Shooter
-
 UE_LOG(LogTemp, Warning, TEXT("Hello"));
 
 	int myInt{ (int)10.6 };
