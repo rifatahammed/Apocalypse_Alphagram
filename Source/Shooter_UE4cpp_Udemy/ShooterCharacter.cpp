@@ -32,7 +32,13 @@ AShooterCharacter::AShooterCharacter():
 	CameraDefaultFOV(0.f), // set in BeginPlay
 	CameraZoomedFOV(35.f),
 	CameraCurrentFOV(0.f),
-	ZoomInterpSpeed(20.f)
+	ZoomInterpSpeed(20.f),
+	// Crosshair spread factors
+	CrosshairSpreadMultiplier(0.f),
+	CrosshairVelocityFactor(0.f),
+	CrosshairInAirFactor(0.f),
+	CrosshairAimFactor(0.f),
+	CrosshairShootingFactor(0.f)
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -344,10 +350,31 @@ void AShooterCharacter::CalculateCrosshairSpread(float DeltaTime)
 			30.f);
 	}
 
+	// Calculate crosshair aim factor
+	if (bAiming) // Are we aiming?
+	{
+		// Shrink crosshairs a small amount very quickly
+		CrosshairAimFactor = FMath::FInterpTo(
+			CrosshairAimFactor,
+			0.6f,
+			DeltaTime,
+			30.f);
+	}
+	else // Not aiming
+	{
+		// Spread crosshairs back to normal very quickly
+		CrosshairAimFactor = FMath::FInterpTo(
+			CrosshairAimFactor,
+			0.f,
+			DeltaTime,
+			30.f);
+	}
+
 	CrosshairSpreadMultiplier =
 		0.5f +
 		CrosshairVelocityFactor +
-		CrosshairInAirFactor;
+		CrosshairInAirFactor -
+		CrosshairAimFactor;
 	
 }
 
