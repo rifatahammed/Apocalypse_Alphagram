@@ -75,3 +75,5 @@ DerivedDataCache/*
 
 # My custom ignored files
 Content/ParagonLtBelica/*
+Content/STF/*
+Content/_Game/Maps/Jungle.umap
