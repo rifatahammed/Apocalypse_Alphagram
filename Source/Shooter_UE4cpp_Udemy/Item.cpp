@@ -194,9 +194,55 @@ void AItem::SetItemProperties(EItemState State)
 
 void AItem::FinishInterping()
 {
+	bInterping = false;
 	if (Character)
 	{
 		Character->GetPickupItem(this);
+	}
+}
+
+void AItem::ItemInterp(float DeltaTime)
+{
+	if (!bInterping) return;
+
+	if (Character && ItemZCurve)
+	{
+		// Elapsed time since we started ItemInterpTimer
+		const float ElapsedTime = GetWorldTimerManager().GetTimerElapsed(ItemInterpTimer);
+		// Get curve value corresponding to ElapsedTime
+		const float CurveValue = ItemZCurve->GetFloatValue(ElapsedTime);
+		UE_LOG(LogTemp, Warning, TEXT("CurveValue: %f"), CurveValue);
+		// Get the item's initial location when the curve started
+		FVector ItemLocation = ItemInterpStartLocation;
+		// Get location in front of the camera
+		const FVector CameraInterpLocation{ Character->GetCameraInterpLocation() };
+
+		// Vector from Item to Camera Interp Location, X and Y are zeroed out
+		const FVector ItemToCamera{ FVector(0.f, 0.f, (CameraInterpLocation - ItemLocation).Z) };
+		// Scale factor to multiply with CurveValue
+		const float DeltaZ = ItemToCamera.Size();
+
+		//const FVector CurrentLocation{ GetActorLocation() };
+		//// Interpolated X value
+		//const float InterpXValue = FMath::FInterpTo(
+		//	CurrentLocation.X,
+		//	CameraInterpLocation.X,
+		//	DeltaTime,
+		//	30.0f);
+		//// Interpolated Y value
+		//const float InterpYValue = FMath::FInterpTo(
+		//	CurrentLocation.Y,
+		//	CameraInterpLocation.Y,
+		//	DeltaTime,
+		//	30.f);
+
+		//// Set X and Y of ItemLocation to Interped values
+		//ItemLocation.X = InterpXValue;
+		//ItemLocation.Y = InterpYValue;
+
+		// Adding curve value to the Z component of the Initial Location (scaled by DeltaZ)
+		ItemLocation.Z += CurveValue * DeltaZ;
+		SetActorLocation(ItemLocation, true, nullptr, ETeleportType::TeleportPhysics);
 	}
 }
 
@@ -204,7 +250,8 @@ void AItem::FinishInterping()
 void AItem::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	// Handle Item Interping when in the EquipInterping state
+	ItemInterp(DeltaTime);
 }
 
 void AItem::SetItemState(EItemState State)
