@@ -641,3 +641,12 @@ void AShooterCharacter::IncrementOverlappedItemCount(int8 Amount)
 	
 }
 
+FVector AShooterCharacter::GetCameraInterpLocation()
+{
+	const FVector CameraWorldLocation{ FollowCamera->GetComponentLocation() };
+	const FVector CameraForward{ FollowCamera->GetForwardVector() };
+	// Desired = CameraWorldLocation + Forward * A + Up * B
+	return CameraWorldLocation + CameraForward * CameraInterpDistance
+		+ FVector(0.f, 0.f, CameraInterpElevation);
+}
+
