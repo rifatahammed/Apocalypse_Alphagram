@@ -1,6 +1,10 @@
 Done
 6th Folder --> All
 
+===========================================================
+Just delete the Intermediate and Saved folders in your project, 
+they are not needed unless you want to recover something.
+===========================================================
 
 UE_LOG(LogTemp, Warning, TEXT("Hello"));
 
