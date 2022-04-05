@@ -7,7 +7,8 @@
 AWeapon::AWeapon():
 ThrowWeaponTime(0.7f),
 bFalling(false),
-Ammo(0),
+Ammo(30),
+MagazineCapacity(30),
 WeaponType(EWeaponType::EWT_SubmachineGun),
 AmmoType(EAmmoType::EAT_9mm),
 ReloadMontageSection(FName(TEXT("Reload SMG")))
@@ -67,5 +68,11 @@ void AWeapon::DecrementAmmo()
 	{
 		--Ammo;
 	}
+}
+
+void AWeapon::ReloadAmmo(int32 Amount)
+{
+	checkf(Ammo + Amount <= MagazineCapacity, TEXT("Attempted to reload with more than magazine capacity!"));
+	Ammo += Amount;
 }
 
