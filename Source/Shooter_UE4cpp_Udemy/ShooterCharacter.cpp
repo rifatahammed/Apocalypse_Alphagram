@@ -73,6 +73,7 @@ AShooterCharacter::AShooterCharacter():
 	CameraBoom->TargetArmLength = 180.f; // The camera follows at this distance behind the character
 	CameraBoom->bUsePawnControlRotation = true; // Rotate the arm based on the controller
 	CameraBoom->SocketOffset = FVector(0.f, 50.f, 70.f);
+	
 
 	// Create a follow camera
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
@@ -654,7 +655,7 @@ void AShooterCharacter::ReloadWeapon()
 	if (EquippedWeapon == nullptr) return;
 
 	// Do we have ammo of the correct type?
-	if (CarryingAmmo()) 
+	if (CarryingAmmo() && !EquippedWeapon->ClipIsFull())
 	{
 
 		CombatState = ECombatState::ECS_Reloading;
