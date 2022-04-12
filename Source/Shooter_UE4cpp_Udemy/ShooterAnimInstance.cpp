@@ -13,8 +13,11 @@ UShooterAnimInstance::UShooterAnimInstance():
 	MovementOffsetYaw(0.f),
 	LastMovementOffsetYaw(0.f),
 	bAiming(false),
-	CharacterYaw(0.f),
-	CharacterYawLastFrame(0.f),
+	CharacterRotation(FRotator(0.f)),
+	CharacterRotationLastFrame(FRotator(0.f)),
+	TIPCharacterYaw(0.f),
+	TIPCharacterYawLastFrame(0.f),
+	YawDelta(0.f),
 	RootYawOffset(0.f), 
 	Pitch(0.f),
 	bReloading(false),
@@ -111,10 +114,10 @@ void UShooterAnimInstance::TurnInPlace()
 	{
 		TIPCharacterYawLastFrame = TIPCharacterYaw;
 		TIPCharacterYaw = ShooterCharacter->GetActorRotation().Yaw;
-		const float YawDelta{ TIPCharacterYaw - TIPCharacterYawLastFrame };
+		const float TIPYawDelta{ TIPCharacterYaw - TIPCharacterYawLastFrame };
 
 		// Root Yaw Offset, updated and clamped to [-180, 180]
-		RootYawOffset = UKismetMathLibrary::NormalizeAxis(RootYawOffset - YawDelta);
+		RootYawOffset = UKismetMathLibrary::NormalizeAxis(RootYawOffset - TIPYawDelta);
 
 		// 1.0 if turning, 0.0 if not
 		const float Turning{ GetCurveValue(TEXT("Turning")) };
