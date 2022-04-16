@@ -19,7 +19,7 @@
 
 // Sets default values
 AShooterCharacter::AShooterCharacter():
-	//--------------------------------------------------CameraBoom(CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"))),
+	CameraBoom(CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"))),
 	// Base rates for turning/looking up
 	BaseTurnRate(45.f),
 	BaseLookUpRate(45.f),
@@ -31,13 +31,13 @@ AShooterCharacter::AShooterCharacter():
 	// Mouse look sensitivity scale factors 
 	MouseHipTurnRate(1.0f),
 	MouseHipLookUpRate(1.0f),
-	MouseAimingTurnRate(0.2f),
-	MouseAimingLookUpRate(0.2f),
+	MouseAimingTurnRate(0.6f),
+	MouseAimingLookUpRate(0.6f),
 	// true when aiming the weapon
 	bAiming(false),
 	// Camera field of view values
 	CameraDefaultFOV(0.f), // set in BeginPlay
-	CameraZoomedFOV(35.f),
+	CameraZoomedFOV(25.f),
 	CameraCurrentFOV(0.f),
 	ZoomInterpSpeed(20.f),
 	// Crosshair spread factors
@@ -76,11 +76,11 @@ AShooterCharacter::AShooterCharacter():
 	PrimaryActorTick.bCanEverTick = true;
 
 	// Create a camera boom (pulls in towards the character if there is a collision)
-	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
+	//CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
 	CameraBoom->TargetArmLength = 180.f; // The camera follows at this distance behind the character
 	CameraBoom->bUsePawnControlRotation = true; // Rotate the arm based on the controller
-	CameraBoom->SocketOffset = FVector(0.f, 50.f, 45.f);
+	CameraBoom->SocketOffset = FVector(0.f, 50.f, 70.f);
 	
 
 	// Create a follow camera
