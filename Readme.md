@@ -1,5 +1,5 @@
 Done
-8th Folder --> 24
+8th Folder --> All
 
 ===========================================================
 Just delete the Intermediate and Saved folders in your project, 
