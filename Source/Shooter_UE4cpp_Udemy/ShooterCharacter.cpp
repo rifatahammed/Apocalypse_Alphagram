@@ -861,7 +861,21 @@ void AShooterCharacter::InitializeInterpLocations()
 	InterpLocations.Add(InterpLoc6);
 }
 
+int32 AShooterCharacter::GetInterpLocationIndex()
+{
+	int32 LowestIndex = 1;
+	int32 LowestCount = INT_MAX;
+	for (int32 i = 1; i < InterpLocations.Num(); i++)
+	{
+		if (InterpLocations[i].ItemCount < LowestCount)
+		{
+			LowestIndex = i;
+			LowestCount = InterpLocations[i].ItemCount;
+		}
+	}
 
+	return LowestIndex;
+}
 
 // Called every frame
 void AShooterCharacter::Tick(float DeltaTime)
@@ -970,7 +984,7 @@ void AShooterCharacter::IncrementOverlappedItemCount(int8 Amount)
 		}
 	
 }
-
+/* No longer needed; AItem has GetInterpLocation
 FVector AShooterCharacter::GetCameraInterpLocation()
 {
 	const FVector CameraWorldLocation{ FollowCamera->GetComponentLocation() };
@@ -978,7 +992,7 @@ FVector AShooterCharacter::GetCameraInterpLocation()
 	// Desired = CameraWorldLocation + Forward * A + Up * B
 	return CameraWorldLocation + CameraForward * CameraInterpDistance
 		+ FVector(0.f, 0.f, CameraInterpElevation);
-}
+}*/
 
 void AShooterCharacter::GetPickupItem(AItem* Item)
 {
@@ -1007,5 +1021,16 @@ FInterpLocation AShooterCharacter::GetInterpLocation(int32 Index)
 		return InterpLocations[Index];
 	}
 	return FInterpLocation();
+}
+
+void AShooterCharacter::IncrementInterpLocItemCount(int32 Index, int32 Amount)
+{
+
+	if (Amount < -1 || Amount > 1) return;
+
+	if (InterpLocations.Num() >= Index)
+	{
+		InterpLocations[Index].ItemCount += Amount;
+	}
 }
 

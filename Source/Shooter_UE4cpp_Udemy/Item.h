@@ -82,6 +82,9 @@ protected:
 	/** Handles item interpolation when in the EquipInterping state */
 	void ItemInterp(float DeltaTime);
 
+	/** Get interp location based on the item type */
+	FVector GetInterpLocation();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -168,6 +171,10 @@ private:
 	/** Enum for the type of item this Item is */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item Properties", meta = (AllowPrivateAccess = "true"))
 	EItemType ItemType;
+
+	/** Index of the interp location this item is interping to */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Item Properties", meta = (AllowPrivateAccess = "true"))
+	int32 InterpLocIndex;
 
 public:
 	FORCEINLINE UWidgetComponent* GetPickupWidget() const { return PickupWidget; }
