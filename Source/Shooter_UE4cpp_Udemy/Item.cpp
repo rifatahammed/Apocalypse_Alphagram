@@ -66,6 +66,9 @@ void AItem::BeginPlay()
 	
 	// Set Item properties based on ItemState
 	SetItemProperties(ItemState);
+
+	// Set custom depth to disabled
+	InitializeCustomDepth();
 }
 
 void AItem::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -303,6 +306,11 @@ void AItem::PlayPickupSound()
 	}
 }
 
+void AItem::InitializeCustomDepth()
+{
+	DisableCustomDepth();
+}
+
 void AItem::PlayEquipSound()
 {
 	if (Character)
@@ -361,5 +369,15 @@ void AItem::StartItemCurve(AShooterCharacter* Char)
 	const float ItemRotationYaw{ GetActorRotation().Yaw };
 	// Initial Yaw offset between Camera and Item
 	InterpInitialYawOffset = ItemRotationYaw - CameraRotationYaw;
+}
+
+void AItem::EnableCustomDepth()
+{
+	ItemMesh->SetRenderCustomDepth(true);
+}
+
+void AItem::DisableCustomDepth()
+{
+	ItemMesh->SetRenderCustomDepth(false);
 }
 
