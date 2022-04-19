@@ -523,7 +523,7 @@ void AShooterCharacter::TraceForItems()
 				// Show Item's Pickup Widget
 				TraceHitItem->GetPickupWidget()->SetVisibility(true);
 				TraceHitItem->EnableCustomDepth();
-			}
+			} 
 
 			// We hit an AItem last frame
 			if (TraceHitItemLastFrame)
