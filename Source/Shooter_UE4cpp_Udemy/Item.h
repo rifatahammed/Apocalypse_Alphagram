@@ -91,6 +91,9 @@ protected:
 
 	virtual void OnConstruction(const FTransform& Transform) override;
 
+	void EnableGlowMaterial();
+	void DisableGlowMaterial();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -196,6 +199,8 @@ private:
 	/** Material Instance used with the Dynamic Material Instance */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item Properties", meta = (AllowPrivateAccess = "true"))
 	UMaterialInstance* MaterialInstance;
+
+	bool bCanChangeCustomDepth;
 
 
 public:

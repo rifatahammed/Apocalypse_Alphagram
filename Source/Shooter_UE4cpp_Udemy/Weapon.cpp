@@ -57,6 +57,8 @@ void AWeapon::ThrowWeapon()
 		this,
 		&AWeapon::StopFalling,
 		ThrowWeaponTime);
+
+	EnableGlowMaterial();
 }
 
 void AWeapon::DecrementAmmo()
