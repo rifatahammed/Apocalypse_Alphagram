@@ -1,5 +1,5 @@
 Done
-10th Folder --> 30
+10th Folder --> 32
 
 ===========================================================
 Just delete the Intermediate and Saved folders in your project, 
@@ -15,7 +15,7 @@ UE_LOG(LogTemp, Warning, TEXT("Hello"));
 
 	FString myString{ TEXT("My String!!!") };
 	UE_LOG(LogTemp, Warning, TEXT("%s"), *myString);
-to get the name of the current instance
+	to get the name of the current instance
 	UE_LOG(LogTemp, Warning, TEXT("Name of instance:  %s"), *GetName());
 
 	#DeltaTime: Time between frames, times between Frames 
