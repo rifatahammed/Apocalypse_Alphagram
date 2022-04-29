@@ -316,6 +316,13 @@ public:
 	FORCEINLINE void SetIconItem(UTexture2D* Icon) { IconItem = Icon; }
 	// Set ammo icon for the pickup widget
 	FORCEINLINE void SetAmmoIcon(UTexture2D* Icon) { AmmoItem = Icon; }
+	FORCEINLINE void SetMaterialInstance(UMaterialInstance* Instance) { MaterialInstance = Instance; }
+	FORCEINLINE UMaterialInstance* GetMaterialInstance() const { return MaterialInstance; }
+	FORCEINLINE void SetDynamicMaterialInstance(UMaterialInstanceDynamic* Instance) { DynamicMaterialInstance = Instance; }
+	FORCEINLINE UMaterialInstanceDynamic* GetDynamicMaterialInstance() const { return DynamicMaterialInstance; }
+	FORCEINLINE	FLinearColor GetGlowColor() const { return GlowColor; }
+	FORCEINLINE int32 GetMaterialIndex() const { return MaterialIndex; }
+	FORCEINLINE void SetMaterialIndex(int32 Index) { MaterialIndex = Index; }
 
 	/** Called from the AShooterCharacter class */
 	void StartItemCurve(AShooterCharacter* Char, bool bForcePlaySound = false);
