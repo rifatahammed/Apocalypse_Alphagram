@@ -14,9 +14,11 @@ AmmoType(EAmmoType::EAT_9mm),
 ReloadMontageSection(FName(TEXT("Reload SMG"))),
 ClipBoneName(TEXT("smg_clip")),
 SlideDisplacement(0.f),
-SlideDisplacementTime(0.1f),
+SlideDisplacementTime(0.2f),
 bMovingSlide(false),
-MaxSlideDisplacement(4.f)
+MaxSlideDisplacement(4.f),
+MaxRecoilRotation(20.f),
+bAutomatic(true)
 {
 	PrimaryActorTick.bCanEverTick = true;
 }
@@ -78,6 +80,7 @@ void AWeapon::OnConstruction(const FTransform& Transform)
 				MuzzleFlash = WeaponDataRow->MuzzleFlash;
 				FireSound = WeaponDataRow->FireSound;
 				BoneToHide = WeaponDataRow->BoneToHide;
+				bAutomatic = WeaponDataRow->bAutomatic;
 			}
 
 			if (GetMaterialInstance())
@@ -112,6 +115,7 @@ void AWeapon::UpdateSlideDisplacement()
 		const float ElapsedTime{ GetWorldTimerManager().GetTimerElapsed(SlideTimer) };
 		const float CurveValue{ SlideDisplacementCurve->GetFloatValue(ElapsedTime) };
 		SlideDisplacement = CurveValue * MaxSlideDisplacement;
+		RecoilRotation = CurveValue * MaxRecoilRotation;
 	}
 }
 
