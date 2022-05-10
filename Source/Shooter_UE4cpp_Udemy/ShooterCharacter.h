@@ -183,7 +183,8 @@ protected:
 
 	void HighlightInventorySlot();
 	
-
+	UFUNCTION(BlueprintCallable)
+	void Footstep();
 
 public:	
 	// Called every frame

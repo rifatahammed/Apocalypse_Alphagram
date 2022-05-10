@@ -17,6 +17,8 @@
 #include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Ammo.h"
+#include "PhysicalMaterials/PhysicalMaterial.h"
+#include "Shooter_UE4cpp_Udemy.h"
 
 // Sets default values
 AShooterCharacter::AShooterCharacter():
@@ -1024,6 +1026,27 @@ void AShooterCharacter::HighlightInventorySlot()
 	const int32 EmptySlot{ GetEmptyInventorySlot() };
 	HighlightIconDelegate.Broadcast(EmptySlot, true);
 	HighlightedSlot = EmptySlot;
+}
+
+void AShooterCharacter::Footstep()
+{
+	FHitResult HitResult;
+	const FVector Start{ GetActorLocation() };
+	const FVector End{ Start + FVector(0.f, 0.f, -400.f) };
+	FCollisionQueryParams QueryParams;
+	QueryParams.bReturnPhysicalMaterial = true;
+
+	GetWorld()->LineTraceSingleByChannel(
+		HitResult,
+		Start,
+		End,
+		ECollisionChannel::ECC_Visibility,
+		QueryParams);
+	auto HitSurface = HitResult.PhysMaterial->SurfaceType;
+	if (HitSurface == EPS_Grass)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Hit Grass surface type!"));
+	}
 }
 
 void AShooterCharacter::UnHighlightInventorySlot()
