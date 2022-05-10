@@ -1028,7 +1028,7 @@ void AShooterCharacter::HighlightInventorySlot()
 	HighlightedSlot = EmptySlot;
 }
 
-void AShooterCharacter::Footstep()
+EPhysicalSurface AShooterCharacter::GetSurfaceType()
 {
 	FHitResult HitResult;
 	const FVector Start{ GetActorLocation() };
@@ -1042,11 +1042,7 @@ void AShooterCharacter::Footstep()
 		End,
 		ECollisionChannel::ECC_Visibility,
 		QueryParams);
-	auto HitSurface = HitResult.PhysMaterial->SurfaceType;
-	if (HitSurface == EPS_Grass)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Hit Grass surface type!"));
-	}
+	return UPhysicalMaterial::DetermineSurfaceType(HitResult.PhysMaterial.Get());
 }
 
 void AShooterCharacter::UnHighlightInventorySlot()
@@ -1219,15 +1215,18 @@ void AShooterCharacter::GetPickupItem(AItem* Item)
 	Item->PlayEquipSound();
 	
 	auto Weapon = Cast<AWeapon>(Item);
-	if (Inventory.Num() < INVENTORY_CAPACITY)
+	if (Weapon)
 	{
-		Weapon->SetSlotIndex(Inventory.Num());
-		Inventory.Add(Weapon);
-		Weapon->SetItemState(EItemState::EIS_PickedUp);
-	}
-	else // Inventory is full! Swap with EquippedWeapon
-	{
-		SwapWeapon(Weapon);
+		if (Inventory.Num() < INVENTORY_CAPACITY)
+		{
+			Weapon->SetSlotIndex(Inventory.Num());
+			Inventory.Add(Weapon);
+			Weapon->SetItemState(EItemState::EIS_PickedUp);
+		}
+		else // Inventory is full! Swap with EquippedWeapon
+		{
+			SwapWeapon(Weapon);
+		}
 	}
 
 	auto Ammo = Cast<AAmmo>(Item);
