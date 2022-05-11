@@ -20,6 +20,7 @@
 #include "PhysicalMaterials/PhysicalMaterial.h"
 #include "Shooter_UE4cpp_Udemy.h"
 #include "BulletHitInterface.h"
+#include "Enemy.h"
 
 // Sets default values
 AShooterCharacter::AShooterCharacter():
@@ -730,6 +731,17 @@ void AShooterCharacter::SendBullet()
 				if (BulletHitInterface)
 				{
 					BulletHitInterface->BulletHit_Implementation(BeamHitResult);
+				}
+
+				AEnemy* HitEnemy = Cast<AEnemy>(BeamHitResult.Actor.Get());
+				if (HitEnemy)
+				{
+					UGameplayStatics::ApplyDamage(
+						BeamHitResult.Actor.Get(),
+						EquippedWeapon->GetHeadShotDamage(),
+						GetController(),
+						this,
+						UDamageType::StaticClass());
 				}
 			}
 			else

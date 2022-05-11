@@ -35,4 +35,5 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void BulletHit_Implementation(FHitResult HitResult) override;
+
 };
