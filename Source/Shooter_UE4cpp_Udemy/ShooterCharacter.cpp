@@ -21,6 +21,8 @@
 #include "Shooter_UE4cpp_Udemy.h"
 #include "BulletHitInterface.h"
 #include "Enemy.h"
+#include "EnemyController.h"
+#include "BehaviorTree/BlackboardComponent.h"
 
 // Sets default values
 AShooterCharacter::AShooterCharacter():
@@ -146,6 +148,15 @@ AShooterCharacter::AShooterCharacter():
 		{
 			Health = 0.f;
 			Die();
+
+			auto EnemyController = Cast<AEnemyController>(EventInstigator);
+			if (EnemyController)
+			{
+				EnemyController->GetBlackboardComponent()->SetValueAsBool(
+					FName(TEXT("CharacterDead")),
+					true
+				);
+			}
 		}
 		else
 		{
