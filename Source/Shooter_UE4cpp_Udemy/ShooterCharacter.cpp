@@ -145,12 +145,37 @@ AShooterCharacter::AShooterCharacter():
 		if (Health - DamageAmount <= 0.f)
 		{
 			Health = 0.f;
+			Die();
 		}
 		else
 		{
 			Health -= DamageAmount;
 		}
 		return DamageAmount;
+	}
+
+	void AShooterCharacter::Die()
+	{
+		UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+		if (AnimInstance && DeathMontage)
+		{
+			AnimInstance->Montage_Play(DeathMontage);
+			//AnimInstance->Montage_JumpToSection(FName("DeathA"), DeathMontage);
+		}
+
+		// Start bullet fire timer for crosshairs
+		//StartCrosshairBulletFire();
+	}
+
+	void AShooterCharacter::FinishDeath()
+	{
+
+		GetMesh()->bPauseAnims = true;
+		APlayerController* PC = UGameplayStatics::GetPlayerController(this, 0);
+		if (PC)
+		{
+			DisableInput(PC);
+		}
 	}
 
 // Called when the game starts or when spawned
@@ -1127,6 +1152,8 @@ void AShooterCharacter::UnHighlightInventorySlot()
 
 void AShooterCharacter::Stun()
 {
+	if (Health <= 0.f) return;
+
 	CombatState = ECombatState::ECS_Stunned;
 
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
