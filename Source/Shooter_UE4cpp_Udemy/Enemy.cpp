@@ -38,7 +38,7 @@ AEnemy::AEnemy() :
 	bCanAttack(true),
 	AttackWaitTime(1.f),
 	bDying(false),
-	DeathTime(1.f)
+	DeathTime(001.f)
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -301,11 +301,13 @@ void AEnemy::CombatRangeEndOverlap(UPrimitiveComponent* OverlappedComponent, AAc
 void AEnemy::PlayAttackMontage(FName Section, float PlayRate)
 {
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	
 	if (AnimInstance && AttackMontage)
 	{
 		AnimInstance->Montage_Play(AttackMontage);
 		AnimInstance->Montage_JumpToSection(Section, AttackMontage);
 	}
+	
 	bCanAttack = false;
 	GetWorldTimerManager().SetTimer(
 		AttackWaitTimer,
