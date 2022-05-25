@@ -52,6 +52,10 @@ public:
 		class AController* EventInstigator,
 		AActor* DamageCauser) override;
 
+	/** Popup widget for when the player looks at the item */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI", meta = (AllowPrivateAccess = "true"))
+		class UWidgetComponent* GameOverWidget;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -210,6 +214,9 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 private:
+
+	
+
 	/* Camera boom positioning the Camera behind the character  */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, category = Camera, meta = (AllowPrivateAccess = "true"));
 	class USpringArmComponent* CameraBoom;
@@ -514,6 +521,11 @@ private:
 		bool bDead;
 
 public:
+	/** true when Character dies */
+	/*UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Combat, meta = (AllowPrivateAccess = "true"))
+		bool bDead;*/
+	FORCEINLINE UWidgetComponent* GetGameOverWidget() const { return GameOverWidget; }
+
 	/* Return Camera boom  subObject */
 	FORCEINLINE USpringArmComponent* GetCameraBoom() const { return CameraBoom; };
 

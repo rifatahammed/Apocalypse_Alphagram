@@ -176,6 +176,8 @@ AShooterCharacter::AShooterCharacter():
 			//AnimInstance->Montage_JumpToSection(FName("DeathA"), DeathMontage);
 		}
 
+		GetGameOverWidget()->SetVisibility(true);
+
 		// Start bullet fire timer for crosshairs
 		//StartCrosshairBulletFire();
 	}
