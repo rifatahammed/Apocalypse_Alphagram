@@ -76,10 +76,6 @@ DerivedDataCache/*
 # My custom ignored files
 Content/ParagonLtBelica/*
 Content/STF/*
-Content/_Game/Maps/Jungle.umap
-Content/AnimStarterPack
-Content/_Game/
-Content/_Game/Assets/Sounds
 Content/FPS_Weapon_Bundle
 Content/A_Surface_Footstep
 Content/ParagonGrux
