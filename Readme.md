@@ -1,5 +1,4 @@
 ##Apocalypse Alphagram
-By Rifat Ahammed
 ---
 
 
